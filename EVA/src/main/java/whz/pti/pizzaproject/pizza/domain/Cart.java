@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import whz.pti.pizzaproject.common.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +21,11 @@ import javax.persistence.Entity;
 public class Cart extends BaseEntity<Long> {
 
     private int quantity;
+
+    @OneToMany
+    private Map<String, Item> items;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
 }
