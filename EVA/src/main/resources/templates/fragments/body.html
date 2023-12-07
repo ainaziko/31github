@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="headline (txt)">
+    <div class="container">
+        <br>
+        <header>
+            <h5 class="text-center">
+<!--                hi <span th:if="${fromUser != null}" th:text="${fromUser}"></span>-->
+<!--                :: <span th:if="${txt != null}" th:text="${txt}"></span>-->
+            </h5>
+        </header>
+        <br>
+    </div>
+</div>
+
+<div th:fragment="nav (all)">
+    <div class="container">
+
+
+            <nav class="navbar navbar-expand-md navbar-light bg-custom">
+                <img  th:src="@{/images/pizza.jpeg}" alt="pizza" style="width: 80px; height: 80px;" />
+
+                <a th:href="@{/pizza}" class="navbar-brand p-1 mr-5">PizzaForever-App</a>
+<!--                <div class="collapse navbar-collapse " id="thenavbarDefault">-->
+
+<!--                </div>-->
+
+
+
+<!--        <nav class="navbar navbar-expand-md navbar-light bg-light">-->
+<!--            <a class="navbar-brand p-1 mr-5"></a>-->
+<!--            <button class="navbar-toggler" type="button" data-toggle="collapse"-->
+<!--                    data-target="#thenavbarDefault" aria-controls="thenavbarDefault"-->
+<!--                    aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                <span class="navbar-toggler-icon"></span>-->
+<!--            </button>-->
+
+            <div class="collapse navbar-collapse " id="thenavbarDefault">
+                <ul class="navbar-nav ml-auto">
+
+               <li class="nav-item navbar-nav p-1"  th:if="${currentUser != null and #strings.toString(currentUser.user.role) == 'ADMIN'}">
+              <form th:action="@{/users/managed}" method="get">
+                <input type="submit" class="btn btn-outline-secondary"
+                  value="verwaltete nutzer">
+              </form>
+               </li>
+
+                    <li class="nav-item navbar-nav p-1"  th:if="${currentUser != null }">
+                        <form th:action="@{/user/info}" method="get">
+                            <input type="submit" class="btn btn-outline-info"
+                                   value="mein profil">
+                        </form>
+                    </li>
+
+                    <li class="nav-item navbar-nav p-1" th:if="${currentUser != null}">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" class="btn btn-outline-success"
+                                   value="ausloggen">
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<br>
+
+
+<div th:fragment="greeting (all)">
+    <div class="container">
+
+        <div>was kann ich fuer dich tun ?</div>
+        <br>
+    </div>
+</div>
+
+</body>
+
+</html>
+

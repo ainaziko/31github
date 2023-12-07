@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <head th:include="fragments/header :: head">
+
+    </head>
+
+<body>
+
+<div th:include="fragments/body :: headline (txt='als admin neuen nutzer anlegen?' )"></div>
+<div th:include="fragments/body :: nav (all= true)"></div>
+
+<br>
+
+<div class="container">
+
+
+
+    <h5>liste aller Kunden</h5>
+
+    <table class="table table-hover table-bordered table-sm">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">loginName</th>
+            <th scope="col">email</th>
+            <th scope="col">Aktion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td> <a th:href="${'/users/' + user.loginName}"
+                    th:text="${user.loginName}">nix</a>
+            </td>
+            <td th:text="${user.email}">nix</td>
+            <td><a th:href="@{/users/delete/{loginName}(loginName=${user.loginName})}" class="btn btn-primary">
+                <i class="fas fa-user-times ml-2"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<div th:include="fragments/footer :: footer"></div>
+</body>
+</html>
+

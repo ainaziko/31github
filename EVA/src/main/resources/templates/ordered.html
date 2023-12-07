@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pizza</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="stylesheet"  href="style.css" th:href="@{style.css}" media="screen">
+
+
+
+
+</head>
+<body>
+
+<div th:include="fragments/body :: nav (all = true)"></div>
+<div th:fragment="headline (txt)">
+    <div class="container">
+        <br>
+        <header>
+            <h5 class="text-center">
+                Details Ihrer Bestellung <span></span>
+
+            </h5>
+        </header>
+        <br>
+    </div>
+</div>
+<div class="container">
+    <div><span style="color: #FF0000" th:utext="${message}"></span></div>
+    <br>
+
+    <table class="table table-hover table-bordered table-sm">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Menge</th>
+            <th scope="col">Pizza</th>
+            <th scope="col">Größe</th>
+            <th scope="col">Preis</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each ="lastItem : ${orderedItems.getOrderedItems()} ">
+            <form class="bs-example error"  role="form" >
+                <td th:utext="${lastItem.getQuantity()}"><input type="number" name="quantity"  value="0"></td>
+                <td th:utext="${lastItem.getName()}">...</td>
+                <td th:utext="${lastItem.getPizzaSize()}" >...</td>
+                <td th:utext="${lastItem.getOrderedItemPrice()}" >...</td>
+
+                </td>
+            </form>
+
+        </tr>
+        </tbody>
+    </table>
+    <div align="right">
+        <div class="container">
+            <div>Gesamtbetrag: <span th:utext="${orderedItems.getPrice()}"></span></div>
+            <br>
+        </div>
+    </div>
+</div>
+
+<br>
+<div th:fragment="headline (txt)">
+    <div class="container">
+        <br>
+        <header>
+            <h5 class="text-center">
+                Vorherige Bestellungen <span></span>
+
+            </h5>
+        </header>
+        <br>
+    </div>
+</div>
+<div class="container">
+    <div align="center"><span style="color: #6b6d74" th:utext="${messageAboutEmptyHistory}"></span></div>
+
+    <br>
+    <div th:each="prevOrder : ${prevOrders}">
+        <table class="table table-hover table-bordered table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Menge</th>
+                <th scope="col">Pizza</th>
+                <th scope="col">Größe</th>
+                <th scope="col">Preis</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each="itemm : ${prevOrder.getOrderedItems()}">
+                    <form class="bs-example error"  role="form">
+                        <td th:utext="${itemm.getQuantity()}"><input type="number" name="quantity"  value="0"></td>
+                        <td th:utext="${itemm.getName()}">...</td>
+                        <td th:utext="${itemm.getPizzaSize()}" >...</td>
+                        <td th:utext="${itemm.getOrderedItemPrice()}" >...</td>
+
+                    </form>
+
+                </tr>
+
+            </tbody>
+        </table>
+        <div align="right">
+            <div class="container">
+                <div>Gesamtbetrag: <span th:utext="${prevOrder.getPrice()}"></span></div>
+                <br>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+<br>
+
+</body>
+</html>

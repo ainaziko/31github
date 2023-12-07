@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/profile-css.css" th:href="@{static}" media="screen">
+    <head th:include="fragments/header :: head">
+</head>
+<body>
+<div th:include="fragments/body :: nav (all = true)"></div>
+
+
+<div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img th:src="@{/images/profile.png}" alt="Admin" class="rounded-circle" width="150">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Login Name</h6>
+                            </div>
+                            <div th:utext="${user.getLoginName()}" class="col-sm-9 text-secondary">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div th:utext="${user.getEmail()}" class="col-sm-9 text-secondary"></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">First Name</h6>
+                            </div>
+                            <div th:utext="${user.getFistName()}" class="col-sm-9 text-secondary">
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Last Name</h6>
+                            </div>
+                            <div th:utext="${user.getLastName()}" class="col-sm-9 text-secondary">
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Address</h6>
+                            </div>
+                            <div th:each ="a : ${address}" th:utext="${ a.getTown() +' '+ a.getPostalCode()+' '+a.getStreet() + ' '+a.getHouseNumber()}" class="col-sm-9 text-secondary">
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="row gutters-sm">
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

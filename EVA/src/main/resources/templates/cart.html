@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pizza</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="stylesheet"  href="style.css" th:href="@{style.css}" media="screen">
+
+
+    <head th:include="fragments/header :: head">
+
+</head>
+<body>
+<div th:include="fragments/body :: nav (all = true)"></div>
+
+<div th:fragment="headline (txt)">
+    <div class="container">
+        <br>
+        <header>
+            <h5 class="text-center">
+                Warenkorb <span></span>
+
+            </h5>
+        </header>
+        <br>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="container">
+
+    <div><span style="color: #FF0000" th:utext="${message}"></span></div>
+
+    <br>
+
+    <table class="table table-hover table-bordered table-sm">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Menge</th>
+            <th scope="col">Pizza</th>
+            <th scope="col">Größe</th>
+            <th scope="col">Preis</th>
+            <th scope="col">Aktion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each ="item : ${listAllItems} ">
+            <form class="bs-example error"  role="form" >
+                <td th:utext="${item.quantity}"><input type="number" name="quantity"  value="0"></td>
+                <td th:utext="${item.getPizza().getName()}">...</td>
+                <td th:utext="${item.getPizzaSize().toString()}" >...</td>
+                <td th:utext="${item.getItemPrice().floatValue()}" >...</td>
+                <td><a th:href="@{/pizza/delete/{index}(index=${listAllItems.indexOf(item)})}" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-x-fill" viewBox="0 0 16 16">
+                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7.354 5.646 8.5 6.793l1.146-1.147a.5.5 0 0 1 .708.708L9.207 7.5l1.147 1.146a.5.5 0 0 1-.708.708L8.5 8.207 7.354 9.354a.5.5 0 1 1-.708-.708L7.793 7.5 6.646 6.354a.5.5 0 1 1 .708-.708z"/>
+                </svg></a></td>
+
+                </td>
+            </form>
+
+        </tr>
+
+        </tbody>
+    </table>
+    <br>
+    <div align="right" th:fragment="greeting (all)">
+        <div class="container">
+
+            <div>Gesamtbetrag: <span th:utext="${getTotalPrice}"></span></div>
+            <br>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            //при нажатию на элемент, имеющий класс .open-modal, открыть модальное окно
+            $('.open-modal').click(function(){
+                alert("Die Bestätigung war erfolgreich. " +
+                    "Gehen Sie zum Abschnitt Bestellungen");
+            });
+        });
+    </script>
+
+
+
+
+    <form class="bs-example error" th:action="@{/pizza/confirm}" th:object="${listAllItems}"
+          method="post" role="form">
+        <button  type="submit" class="btn  btn-outline-primary open-modal"  data-toggle="modal" data-target="#myModal" value="Bestätigung" > Bestätigung </button>
+    </form>
+    <br>
+
+
+
+
+
+
+
+
+    <form class="bs-example error" th:action="@{/ordered/get-all-details}"
+          method="post" role="form">
+        <input type="submit" class="btn btn-outline-primary" value="Bestellung">
+    </form>
+
+
+</div>
+
+<br>
+
+<!--<div class="container">-->
+
+<!--    -->
+<!--    <details>-->
+<!--        <summary>-->
+<!--            -->
+<!--            <div class="details-modal-overlay"></div>-->
+<!--        </summary>-->
+<!--        <div class="details-modal">-->
+<!--            <div class="details-modal-close">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">-->
+<!--                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.70711C14.0976 1.31658 14.0976 0.683417 13.7071 0.292893C13.3166 -0.0976311 12.6834 -0.0976311 12.2929 0.292893L7 5.58579L1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L5.58579 7L0.292893 12.2929C-0.0976311 12.6834 -0.0976311 13.3166 0.292893 13.7071C0.683417 14.0976 1.31658 14.0976 1.70711 13.7071L7 8.41421L12.2929 13.7071C12.6834 14.0976 13.3166 14.0976 13.7071 13.7071C14.0976 13.3166 14.0976 12.6834 13.7071 12.2929L8.41421 7L13.7071 1.70711Z" fill="black" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--            <div class="details-modal-title">-->
+<!--                <h1>Best</h1>-->
+<!--            </div>-->
+<!--            <div class="details-modal-content">-->
+<!--                <p>-->
+<!--                    </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </details>-->
+<!--</div>-->
+
+
+
+
+
+
+</body>
+</html>

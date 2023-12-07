@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pizza</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="stylesheet"  href="style.css" th:href="@{style.css}" media="screen">
+
+
+
+
+</head>
+<body>
+<div th:include="fragments/body :: headline (txt='als admin neuen nutzer anlegen?' )"></div>
+<div th:include="fragments/body :: nav (all = true)"></div>
+
+
+
+    <div class="container">
+        <br>
+        <header>
+            <h5 class="text-center">
+                hallo <span></span>
+                :: <span >was kann ich für dich tun?</span>
+            </h5>
+        </header>
+        <br>
+    </div>
+
+
+<div class="container">
+
+    <br>
+
+    <table class="table table-hover table-bordered table-sm">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Menge</th>
+            <th scope="col">Pizza</th>
+            <th scope="col">Preis+Größe</th>
+            <th scope="col">in den Warenkorb</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each ="pizzaObj : ${listAllPizza}">
+            <form class="bs-example error" th:action="@{/pizza/add-to-cart}" th:object="${listAllItems}"
+                  method="post" role="form" >
+            <td><input type="number" min="1" max="1000" name="quantity"  value="1"></td>
+            <td th:utext="${pizzaObj.name}">...</td>
+                <input type="hidden" name="pizzaId" th:value="${pizzaObj.getId()}">
+                <td>
+                    <select class="custom-select"  id="pizzaSize" name="pizzaSize">
+                        <option th:text="${'Large / '+pizzaObj.getPriceLarge()}" th:value="${T(whz.pti.eva.pizza.domain.PizzaSize).Large.toString()}"></option>
+                        <option th:text="${'Medium / '+pizzaObj.getPriceMedium()}" th:value="${T(whz.pti.eva.pizza.domain.PizzaSize).Medium.toString()}"></option>
+                        <option th:text="${'Small / '+pizzaObj.getPriceSmall()}" th:value="${T(whz.pti.eva.pizza.domain.PizzaSize).Small.toString()}"></option>
+                    </select>
+                </td>
+
+            <td><input type="submit" class="btn btn-outline-primary" value="in den Warenkorb"></td>
+            </form>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+
+<div th:fragment="greeting (all)">
+    <div class="container">
+
+        <div>IM WARENKORB ::: Anzahl der bestellten Pizzas: <span th:utext="${getAmountOfItems}"></span> mit Gesamtbetrag: <span th:utext="${getTotalPrice}"></span></div>
+        <br>
+    </div>
+</div>
+
+
+<div class="container">
+
+    <form class="bs-example error" th:action="@{/pizza/cart}" th:object="${listAllItems}" method="get" role="form">
+        <input type="submit" class="form-control" placeholder="zum Warenkorb" required="required" autofocus="autofocus" value="Zum Warenkorb">
+
+        <br>
+    </form>
+
+</div>
+
+
+
+
+</body>
+</html>
