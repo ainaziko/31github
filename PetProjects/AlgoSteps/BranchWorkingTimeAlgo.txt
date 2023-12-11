@@ -1,0 +1,20 @@
+package neocafe;
+
+public class Solution {
+
+    //1. get the curr day (день недели определить)
+    //2. get the curr time -> закроется/откроется через 30-40 минут
+    //3. get from working_time table a field by curr day(mo-sun) and by filial id -> 08:00-18:00 | null
+            //return closed if null
+    //String todaysWorkingHoursOfCurrentBranch = 08:00-18:00;
+
+    // convert these vars into Time
+    //String startTime = todaysWorkingHoursOfCurrentBranch.substring(0, 5); // 08:00
+    //String endTime = todaysWorkingHoursOfCurrentBranch.substring(6);
+
+    //tell closed if (startTime >= curr time >= endTime) ||
+    //tell open if     startTime <= curr time <= endTime - 40 min
+    //tell closes in 40-15 min (switch case)
+        //if(endTime - currTime)
+            //return "closes in (endTime - currTime);
+}
